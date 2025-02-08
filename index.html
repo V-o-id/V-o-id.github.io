@@ -1,27 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Godot Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        iframe {
-            width: 80%;
-            height: 600px;
-            border: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Little Ninja Adventure</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    iframe {
+      width: 80%;
+      height: 600px;
+      border: none;
+    }
+    /* Styling for the API test section */
+    #api-test {
+      margin: 20px auto;
+      width: 80%;
+      max-width: 600px;
+      text-align: left;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    #api-test button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    #api-response {
+      background: #eef;
+      padding: 10px;
+      border: 1px solid #ccd;
+      border-radius: 3px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to Little Ninja Adventure</h1>
-    <p>Everything is still under construction, please report any bugs to me</p>
-    <iframe src="game_build/little-ninja-adventure.html"></iframe>
-    <p>Another line of text...</p>
+  <h1>Welcome to Little Ninja Adventure</h1>
+  <p>Everything is still under construction, please report any bugs to me!</p>
+  <iframe src="game_build/little-ninja-adventure.html"></iframe>
+  
+  <!-- API Test Section -->
+  <div id="api-test">
+    <h2>Test API Request</h2>
+    <button id="test-api-button">Send Test Request</button>
+    <pre id="api-response">API response will appear here.</pre>
+  </div>
+  
+  <!-- JavaScript to test the API -->
+  <script>
+    document.getElementById('test-api-button').addEventListener('click', function() {
+      // Sending a GET request to your API root endpoint
+      fetch('https://little-ninja-adventure-api.onrender.com/')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Display the API response in the pre element
+          document.getElementById('api-response').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          document.getElementById('api-response').textContent = 'Error: ' + error;
+        });
+    });
+  </script>
 </body>
 </html>
