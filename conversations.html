@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversations Data</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #fafafa;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Conversations Data</h1>
+  <div id="error" class="error"></div>
+  <table id="conversations-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Player Name</th>
+        <th>Held Items</th>
+        <th>NPC Personality</th>
+        <th>Player Input</th>
+        <th>NPC Response</th>
+        <th>NPC Action</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Table rows will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    // Update this with your actual API endpoint URL
+    const apiUrl = 'https://your-app-url.com/conversations';
+
+    // Fetch conversation data and populate the table
+    async function fetchConversations() {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        const data = await response.json();
+        displayConversations(data.conversations);
+      } catch (err) {
+        document.getElementById('error').textContent = 'Error fetching conversations: ' + err.message;
+        console.error('Error:', err);
+      }
+    }
+
+    // Create table rows based on the data and append them to the table body
+    function displayConversations(conversations) {
+      const tbody = document.querySelector('#conversations-table tbody');
+      tbody.innerHTML = ''; // Clear any existing rows
+
+      conversations.forEach(convo => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${convo.id}</td>
+          <td>${convo.player_name}</td>
+          <td>${convo.held_items}</td>
+          <td>${convo.npc_personality}</td>
+          <td>${convo.player_input}</td>
+          <td>${convo.npc_response}</td>
+          <td>${convo.npc_action}</td>
+          <td>${convo.timestamp}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Fetch data once the page loads
+    window.onload = fetchConversations;
+  </script>
+</body>
+</html>
