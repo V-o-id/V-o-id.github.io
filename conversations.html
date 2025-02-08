@@ -33,11 +33,22 @@
       font-weight: bold;
       text-align: center;
     }
+    .download-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <h1>Conversations Data</h1>
   <div id="error" class="error"></div>
+  <button id="download-button" class="download-button">Download CSV</button>
   <table id="conversations-table">
     <thead>
       <tr>
@@ -58,7 +69,8 @@
 
   <script>
     // Update this with your actual API endpoint URL
-    const apiUrl = 'https://your-app-url.com/conversations';
+    const apiUrl = 'https://little-ninja-adventure-api.onrender.com/conversations';
+    let conversationData = [];
 
     // Fetch conversation data and populate the table
     async function fetchConversations() {
@@ -68,7 +80,8 @@
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
         const data = await response.json();
-        displayConversations(data.conversations);
+        conversationData = data.conversations;
+        displayConversations(conversationData);
       } catch (err) {
         document.getElementById('error').textContent = 'Error fetching conversations: ' + err.message;
         console.error('Error:', err);
@@ -95,6 +108,48 @@
         tbody.appendChild(tr);
       });
     }
+
+    // Convert JSON array to CSV format
+    function convertToCSV(objArray) {
+      const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+      let csv = '';
+      if (array.length > 0) {
+        // Create the header row using the keys of the first object
+        const headers = Object.keys(array[0]).join(',');
+        csv += headers + '\r\n';
+      }
+      // Process each row
+      array.forEach(item => {
+        const row = Object.values(item)
+          .map(value => `"${value}"`)
+          .join(',');
+        csv += row + '\r\n';
+      });
+      return csv;
+    }
+
+    // Download CSV file
+    function downloadCSVFile() {
+      if (conversationData.length === 0) {
+        alert('No data available to download.');
+        return;
+      }
+      const csv = convertToCSV(conversationData);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "conversations.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+
+    // Add event listener for download button
+    document.getElementById('download-button').addEventListener('click', downloadCSVFile);
 
     // Fetch data once the page loads
     window.onload = fetchConversations;
