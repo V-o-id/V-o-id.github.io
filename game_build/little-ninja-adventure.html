@@ -95,6 +95,15 @@ body {
 			<div id="status-notice"></div>
 		</div>
 
+		<script>
+			document.addEventListener('click', function() {
+			  const gameCanvas = document.getElementById('canvas');
+			  if (gameCanvas) {
+				gameCanvas.focus();
+			  }
+			});
+		  </script>
+
 		<script src="little-ninja-adventure.js"></script>
 		<script>
 const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"ensureCrossOriginIsolationHeaders":true,"executable":"little-ninja-adventure","experimentalVK":false,"fileSizes":{"little-ninja-adventure.pck":66299408,"little-ninja-adventure.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[]};
