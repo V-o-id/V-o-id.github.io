@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<body style="background-color:black;"></body>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,46 +46,15 @@
 <body>
   <h1>Welcome to Little Ninja Adventure</h1>
 
-  <!-- API Test Section -->
-  <div id="api-test">
-    <h2>Test/Wake-up</h2>
-    <p>Please test the API connection here. The response might take a minute, but then everything should be set up</p>
-    <button id="test-api-button">Send Test Request</button>
-    <pre id="api-response">API response will appear here.</pre>
-  </div>
-
   <p>If you click somewhere outside the game, keyboard input might not be recognized anymore.</p>
   <p>You can fix this by simply switching to another browser tab and then switch back to this page.</p>
 
   <iframe src="game_build/little-ninja-adventure.html"></iframe>
 
   <p> </p>
-  <a href="conversations.html">See all conversations</a>
+  <a href="data/conversations.html">See all conversations</a>
 
-  <p>Everything is still under construction, please report any bugs to me!</p>
+  <p>Please report any bugs to me: mhochreiter375@gmail.com</p>
 
-
-
-
-  <!-- JavaScript to test the API -->
-  <script>
-    document.getElementById('test-api-button').addEventListener('click', function() {
-      // Sending a GET request to your API root endpoint
-      fetch('https://little-ninja-adventure-api.onrender.com/')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok: ' + response.statusText);
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Display the API response in the pre element
-          document.getElementById('api-response').textContent = JSON.stringify(data, null, 2);
-        })
-        .catch(error => {
-          document.getElementById('api-response').textContent = 'Error: ' + error;
-        });
-    });
-  </script>
 </body>
 </html>
