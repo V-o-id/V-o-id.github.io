@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Conversations Data</title>
+  <title>Players Data</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -46,64 +46,53 @@
   </style>
 </head>
 <body>
-  <h1>Conversations Data</h1>
+  <h1>Players Data</h1>
   <div id="error" class="error"></div>
   <button id="download-button" class="download-button">Download CSV</button>
-  <table id="conversations-table">
+  <table id="players-table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Player Name</th>
-        <th>Held Items</th>
-        <th>NPC Personality</th>
-        <th>Player Input</th>
-        <th>NPC Response</th>
-        <th>NPC Action</th>
-        <th>Timestamp</th>
+        <th>Creation Timestamp</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Table rows will be inserted here -->
+      <!-- Player rows will be inserted here -->
     </tbody>
   </table>
 
   <script>
     // Update this with your actual API endpoint URL
-    const apiUrl = 'https://https://littleninja.games.cg.jku.at/conversations';
-    let conversationData = [];
+    const apiUrl = 'https://littleninja.games.cg.jku.at/players';
+    let playersData = [];
 
-    // Fetch conversation data and populate the table
-    async function fetchConversations() {
+    // Fetch player data and populate the table
+    async function fetchPlayers() {
       try {
         const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
         const data = await response.json();
-        conversationData = data.conversations;
-        displayConversations(conversationData);
+        // Assuming the API returns { players: [...] }
+        playersData = data.players;
+        displayPlayers(playersData);
       } catch (err) {
-        document.getElementById('error').textContent = 'Error fetching conversations: ' + err.message;
+        document.getElementById('error').textContent = 'Error fetching players: ' + err.message;
         console.error('Error:', err);
       }
     }
 
-    // Create table rows based on the data and append them to the table body
-    function displayConversations(conversations) {
-      const tbody = document.querySelector('#conversations-table tbody');
+    // Create table rows based on the player data
+    function displayPlayers(players) {
+      const tbody = document.querySelector('#players-table tbody');
       tbody.innerHTML = ''; // Clear any existing rows
 
-      conversations.forEach(convo => {
+      players.forEach(player => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${convo.id}</td>
-          <td>${convo.player_name}</td>
-          <td>${convo.held_items}</td>
-          <td>${convo.npc_personality}</td>
-          <td>${convo.player_input}</td>
-          <td>${convo.npc_response}</td>
-          <td>${convo.npc_action}</td>
-          <td>${convo.timestamp}</td>
+          <td>${player.player_name}</td>
+          <td>${player.creation_timestamp}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -130,17 +119,17 @@
 
     // Download CSV file
     function downloadCSVFile() {
-      if (conversationData.length === 0) {
+      if (playersData.length === 0) {
         alert('No data available to download.');
         return;
       }
-      const csv = convertToCSV(conversationData);
+      const csv = convertToCSV(playersData);
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement("a");
       if (link.download !== undefined) {
         const url = URL.createObjectURL(blob);
         link.setAttribute("href", url);
-        link.setAttribute("download", "conversations.csv");
+        link.setAttribute("download", "players.csv");
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
@@ -152,7 +141,7 @@
     document.getElementById('download-button').addEventListener('click', downloadCSVFile);
 
     // Fetch data once the page loads
-    window.onload = fetchConversations;
+    window.onload = fetchPlayers;
   </script>
 </body>
 </html>
