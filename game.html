@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Void | GitHub Pages</title>
+  <title>Little Ninja Adventure</title>
   <style>
     /* ===== GLOBAL STYLES ===== */
     :root {
@@ -50,13 +50,13 @@
       font-size: 1.2rem;
       color: var(--text-muted);
       font-weight: 400;
+      margin-bottom: 1rem;
     }
 
-    /* ===== SECTIONS ===== */
     section {
       width: 90%;
-      max-width: 900px;
-      margin: 3rem auto;
+      max-width: 1000px;
+      margin: 2rem auto;
       background: var(--card-bg);
       padding: 2rem;
       border-radius: 1rem;
@@ -65,15 +65,20 @@
       animation: fadeUp 1s ease forwards;
     }
 
-    section h3 {
-      color: var(--text-light);
-      margin-bottom: 1rem;
-    }
-
     p {
       line-height: 1.6;
       color: var(--text-muted);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 1200px;
+      height: 800px;
+      border: none;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
     }
 
     .btn {
@@ -109,7 +114,6 @@
       text-decoration: underline;
     }
 
-    /* ===== ANIMATIONS ===== */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -120,58 +124,54 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
       h1 { font-size: 2.2rem; }
+      iframe { height: 600px; width: 95%; }
       section { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Void</h1>
-    <h2>Student • Software Engineer • Hobby Game Developer</h2>
+    <h1>Little Ninja Adventure</h1>
+    <h2>A Bachelor’s Thesis Project by Manuel Hochreiter</h2>
   </header>
 
   <section>
     <p>
-      Hello there 👋 — I’m a Computer Science student and software engineer based in Austria.
-      In my free time, I enjoy creating small, experimental games and exploring the intersection
-      between <strong>technology</strong> and <strong>storytelling</strong>.
+      <em>Little Ninja Adventure</em> was created in <strong>Godot</strong> as part of my Bachelor’s Thesis.
+      You play as a young kid who dreams of becoming a ninja — but the guard of the dojo won’t let you in so easily.
     </p>
 
     <p>
-      Take a look at the project for my <strong>Bachelor’s Thesis</strong> — 
-      <em>Little Ninja Adventure</em>.
-      It explores <strong>Generative NPC Dialogues</strong> and their impact on player experience.
+      The villagers you meet along the way are powered by <strong>ChatGPT</strong>, giving each interaction a unique,
+      generative dialogue experience.
     </p>
 
-    <a href="game.html" class="btn">🎮 Play My Thesis Game</a>
-  </section>
-
-  <section>
-    <h3>Other Projects</h3>
     <p>
-      Some of my past projects include:
-    </p>
-    <p>
-      🕹️ <strong>Uni-Rogue</strong> — A university team project for “Multimedia Systems,”
-      inspired by the classic 1980s <em>Rogue</em>, but featuring emoticons as the main characters.
-    </p>
-    <p>
-      ☀️ <strong>WeatherDependentCommits</strong> — A not-so-serious Python script that analyzes
-      whether you make more commits on sunny or rainy days.
-    </p>
-    <p>
-      You can find more of my work and code experiments on GitHub or connect with me on LinkedIn.
+      Please note: the backend is hosted on a free service.  
+      After entering your name, it may take up to a minute for the server to wake up.
     </p>
 
-    <a href="https://github.com/V-o-id" class="btn" target="_blank">💻 View My GitHub</a>
-    <a href="https://www.linkedin.com/in/manuel-hochreiter" class="btn" target="_blank">🔗 LinkedIn</a>
+    <iframe src="game_build/little-ninja-adventure.html"></iframe>
+
+    <p>
+      The game will remain online as long as the project’s hosting budget allows.
+      A user study was conducted to explore whether LLM-powered NPC dialogues
+      enhance <strong>player immersion and experience</strong>.  
+      Results will be published soon.
+    </p>
+
+    <p>
+      Special thanks to <em>pixel-boy</em> for the asset pack —  
+      available on <a href="https://pixel-boy.itch.io/ninja-adventure-asset-pack" target="_blank" style="color: var(--text-light); text-decoration: underline;">Itch.io</a>.
+    </p>
+
+    <a href="index.html" class="btn">⬅️ Back to Home</a>
   </section>
 
   <footer>
-    <p>© 2025 Manuel Hochreiter • Built with ❤️, curiosity, and the occasional confusion</p>
+    <p>© 2025 Manuel Hochreiter • Built with ❤️ and curiosity</p>
   </footer>
 </body>
 </html>
