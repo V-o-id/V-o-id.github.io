@@ -114,6 +114,41 @@
       text-decoration: underline;
     }
 
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-left-color: var(--accent);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    #loading-overlay p {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -132,6 +167,11 @@
   </style>
 </head>
 <body>
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <p>Waking up the backend... This may take a moment.</p>
+  </div>
+
   <header>
     <h1>Little Ninja Adventure</h1>
     <h2>A Bachelor’s Thesis Project by Manuel Hochreiter</h2>
@@ -153,7 +193,7 @@
       After entering your name, it may take up to a minute for the server to wake up.
     </p>
 
-    <iframe src="game_build/little-ninja-adventure.html"></iframe>
+    <iframe src="about:blank" data-src="game_build/little-ninja-adventure.html" style="display: none;"></iframe>
 
     <p>
       The game will remain online as long as the project’s hosting budget allows.
@@ -173,5 +213,32 @@
   <footer>
     <p>© 2025 Manuel Hochreiter • Built with ❤️, curiosity, and the occasional confusion</p>
   </footer>
+
+  <script>
+    const API_URL = "https://little-ninja-api.onrender.com/";
+    const iframe = document.querySelector("iframe");
+    const loadingOverlay = document.getElementById("loading-overlay");
+
+    const pollApi = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (response.ok) {
+          clearInterval(pollingInterval);
+          showGame();
+        }
+      } catch (error) {
+        // API is not ready yet, do nothing
+      }
+    };
+
+    const showGame = () => {
+      loadingOverlay.style.display = "none";
+      iframe.style.display = "block";
+      iframe.src = iframe.dataset.src;
+    };
+
+    const pollingInterval = setInterval(pollApi, 5000); // Poll every 5 seconds
+    pollApi(); // Initial check
+  </script>
 </body>
 </html>
