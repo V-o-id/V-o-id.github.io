@@ -209,31 +209,64 @@
     <p>© 2025 Manuel Hochreiter • Built with ❤️, curiosity, and the occasional confusion</p>
   </footer>
 
-  <script>
-    const API_URL = "https://little-ninja-api.onrender.com/";
-    const iframe = document.querySelector("iframe");
-    const loadingOverlay = document.getElementById("loading-overlay");
+<script>
+  const API_URL = "https://little-ninja-api.onrender.com/";
+  const iframe = document.querySelector("iframe");
+  const loadingOverlay = document.getElementById("loading-overlay");
+  const loadingText = loadingOverlay.querySelector("p");
 
-    const pollApi = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (response.ok) {
-          clearInterval(pollingInterval);
-          showGame();
-        }
-      } catch (error) {
-        // API is not ready yet, do nothing
+  const INITIAL_DELAY_MS = 40_000; // wait 40 seconds
+  const POLL_INTERVAL_MS = 10_000; // poll every 10 seconds
+  const MAX_POLLS = 6;
+
+  let pollCount = 0;
+  let pollingInterval = null;
+
+  const pollApi = async () => {
+    pollCount++;
+
+    try {
+      const response = await fetch(API_URL);
+      if (response.ok) {
+        stopPolling();
+        showGame();
+        return;
       }
-    };
+    } catch (_) {
+      // ignore errors while backend wakes up
+    }
 
-    const showGame = () => {
-      loadingOverlay.style.display = "none";
-      iframe.style.display = "block";
-      iframe.src = iframe.dataset.src;
-    };
+    if (pollCount >= MAX_POLLS) {
+      stopPolling();
+      loadingText.textContent =
+        "The backend is taking longer than expected. Please refresh the page in a moment.";
+    }
+  };
 
-    const pollingInterval = setInterval(pollApi, 5000); // Poll every 5 seconds
-    pollApi(); // Initial check
-  </script>
+  const startPolling = () => {
+    loadingText.textContent =
+      "Backend warming up... almost there.";
+
+    pollingInterval = setInterval(pollApi, POLL_INTERVAL_MS);
+    pollApi(); // first poll immediately after the delay
+  };
+
+  const stopPolling = () => {
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
+      pollingInterval = null;
+    }
+  };
+
+  const showGame = () => {
+    loadingOverlay.style.display = "none";
+    iframe.style.display = "block";
+    iframe.src = iframe.dataset.src;
+  };
+
+  // Initial delay before polling starts
+  setTimeout(startPolling, INITIAL_DELAY_MS);
+</script>
+
 </body>
 </html>
