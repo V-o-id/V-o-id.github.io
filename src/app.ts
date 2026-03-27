@@ -11,8 +11,14 @@ const NavBar = {
     <nav class="navbar">
       <div class="navbar-links">
         <a class="nav-link" :class="{ active: current === 'home' }" href="index.html">Home</a>
-        <a class="nav-link" :class="{ active: current === 'game' }" href="game.html">Game</a>
-        <a class="nav-link" href="https://v-o-id.github.io/WeatherDependentCommits/" target="_blank" rel="noopener noreferrer">Weather App</a>
+        <details class="nav-dropdown">
+          <summary class="nav-link" :class="{ active: current === 'game' }">Projects</summary>
+          <div class="dropdown-menu">
+            <a class="dropdown-link" href="game.html">Little Ninja Adventure</a>
+            <a class="dropdown-link" href="https://v-o-id.github.io/WeatherDependentCommits/" target="_blank" rel="noopener noreferrer">WeatherDependentCommits</a>
+            <a class="dropdown-link" href="index.html#projects">Project Overview</a>
+          </div>
+        </details>
         <a class="nav-link" href="https://github.com/V-o-id" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a class="nav-link" href="https://www.linkedin.com/in/manuel-hochreiter" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
@@ -51,7 +57,7 @@ const HomePage = {
         <a href="game.html" class="btn">Play My Thesis Game</a>
       </section>
 
-      <section>
+      <section id="projects">
         <h3>Other Projects</h3>
         <p>Some of my past projects include:</p>
         <p>
@@ -63,6 +69,7 @@ const HomePage = {
           whether you make more commits on sunny or rainy days.
         </p>
         <a href="https://v-o-id.github.io/WeatherDependentCommits/" class="btn" target="_blank" rel="noopener noreferrer">Try WeatherDependentCommits Web</a>
+        <p>Analyze your coding habits vs rain data.</p>
         <p>
           You can find more of my work and code experiments on GitHub or connect with me on LinkedIn.
         </p>
@@ -104,7 +111,6 @@ const GamePage = {
           return;
         }
       } catch (_) {
-        // ignored while backend wakes up
       }
 
       if (this.pollCount >= this.MAX_POLLS) {
