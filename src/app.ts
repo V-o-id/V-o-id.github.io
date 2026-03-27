@@ -27,7 +27,7 @@ const NavBar = {
 };
 
 const SiteFooter = {
-  template: `<footer><p>(c) 2025 Manuel Hochreiter - Built with curiosity and the occasional confusion</p></footer>`,
+  template: `<footer><p>&copy; 2025 Manuel Hochreiter - Built with curiosity and the occasional confusion</p></footer>`,
 };
 
 const HomePage = {

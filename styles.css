@@ -41,6 +41,7 @@ body {
   background: var(--nav-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: visible;
 }
 
 .navbar-links {
@@ -48,6 +49,8 @@ body {
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+  overflow: visible;
 }
 
 .nav-link {
@@ -67,15 +70,29 @@ body {
 
 .nav-dropdown {
   position: relative;
+  display: inline-flex;
 }
 
-.nav-dropdown summary {
+.nav-dropdown summary.nav-link {
   list-style: none;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .nav-dropdown summary::-webkit-details-marker {
   display: none;
+}
+
+.nav-dropdown summary.nav-link::after {
+  content: "▾";
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.nav-dropdown[open] summary.nav-link::after {
+  content: "▴";
 }
 
 .dropdown-menu {
@@ -89,8 +106,13 @@ body {
   background: rgba(24, 24, 30, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-  display: grid;
+  display: none;
   gap: 0.35rem;
+  z-index: 70;
+}
+
+.nav-dropdown[open] .dropdown-menu {
+  display: grid;
 }
 
 .dropdown-link {
@@ -257,7 +279,10 @@ iframe {
   }
 
   .dropdown-menu {
-    left: 0;
+    position: static;
+    left: auto;
     transform: none;
+    margin-top: 0.45rem;
+    min-width: 100%;
   }
 }
