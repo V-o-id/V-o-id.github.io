@@ -15,6 +15,7 @@ const NavBar = {
           <div class="dropdown-menu">
             <a class="dropdown-link" href="game.html">Little Ninja Adventure</a>
             <a class="dropdown-link" href="https://v-o-id.github.io/WeatherDependentCommits/" target="_blank" rel="noopener noreferrer">WeatherDependentCommits</a>
+            <a class="dropdown-link" href="https://v-o-id.github.io/ManaSchmiede/" target="_blank" rel="noopener noreferrer">ManaSchmiede</a>
             <a class="dropdown-link" href="index.html#projects">Project Overview</a>
           </div>
         </details>
@@ -67,6 +68,12 @@ const HomePage = {
         </p>
         <a href="https://v-o-id.github.io/WeatherDependentCommits/" class="btn" target="_blank" rel="noopener noreferrer">Try WeatherDependentCommits Web</a>
         <p>Analyze your coding habits vs rain data.</p>
+        <p>
+          <strong>ManaSchmiede</strong> - A web app that turns MTG Arena decklists into printable
+          A4 proxy PDFs by resolving card prints via Scryfall.
+        </p>
+        <a href="https://v-o-id.github.io/ManaSchmiede/" class="btn" target="_blank" rel="noopener noreferrer">Open ManaSchmiede</a>
+        <p>Paste a decklist, resolve the cards, and download a ready-to-print proxy sheet.</p>
         <p>
           You can find more of my work and code experiments on GitHub or connect with me on LinkedIn.
         </p>
